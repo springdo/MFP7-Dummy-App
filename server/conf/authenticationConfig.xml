@@ -55,7 +55,11 @@
        	<customSecurityTest name="SubscribeServlet">
        		<test realm="SubscribeServlet" isInternalUserID="true"/>
        	</customSecurityTest>    		
-
+       	
+       	<customSecurityTest name="LDAPSecurityTest">
+<!-- 			<test realm="wl_directUpdateRealm" step="1"/> -->
+			<test isInternalUserID="true" realm="LDAPRealm"/>
+		</customSecurityTest>
 	</securityTests> 
 	
 	<realms>
@@ -67,6 +71,10 @@
 			<className>com.worklight.core.auth.ext.HeaderAuthenticator</className>			
 		</realm>
 		
+		<realm loginModule="LDAPLoginModule" name="LDAPRealm">
+			<className>com.worklight.core.auth.ext.FormBasedAuthenticator</className>
+			<onLoginUrl>/console</onLoginUrl>
+		</realm>		
 		<!-- For client logger -->
 		<!-- <realm name="LogUploadServlet" loginModule="StrongDummy">
 			<className>com.worklight.core.auth.ext.HeaderAuthenticator</className>
@@ -102,6 +110,19 @@
 	</realms>
 
 	<loginModules>
+		<loginModule name="LDAPLoginModule">
+			<className>com.worklight.core.auth.ext.LdapLoginModule</className>
+  			<parameter name="ldapProviderUrl" value="ldap://ldap.forumsys.com"/>
+  			<parameter name="ldapTimeoutMs" value="2000"/>
+  			<parameter name="ldapSecurityAuthentication" value="simple"/>
+  			<parameter name="validationType" value="exists"/>
+  			<parameter name="ldapSecurityPrincipalPattern" value="uid={username},dc=example,dc=com"/>
+  			<parameter name="ldapSearchFilterPattern" value="(&amp;(objectClass=*))"/>
+  			<parameter name="ldapSearchBase" value="ou=mathematicians,dc=example,dc=com"/>
+			<!-- Optional LDAP parameter "REFERRAL", available values are ignore, follow, throw. --> 
+			<parameter name="ldapReferral" value="ignore" />
+		</loginModule>
+		
 		<loginModule name="StrongDummy" expirationInSeconds="-1">
 			<className>com.worklight.core.auth.ext.NonValidatingLoginModule</className>
 		</loginModule>

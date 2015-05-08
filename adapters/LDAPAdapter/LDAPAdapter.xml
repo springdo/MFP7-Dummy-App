@@ -31,4 +31,6 @@
 
 	<procedure name="getStoriesFiltered"/>
 	
+	<procedure name="getSecretData"  securityTest="LDAPSecurityTest" />
+	
 </wl:adapter>

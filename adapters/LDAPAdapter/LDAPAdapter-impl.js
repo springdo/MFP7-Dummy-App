@@ -72,6 +72,10 @@ function getStoriesFiltered(interest) {
 }
 
 
+function getSecretData(){
+	return {secretData: 1234};
+}
+
 
 function getPath(interest) {
 	if (interest == undefined || interest == '') {

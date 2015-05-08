@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+    	<head>
+    		<meta charset="UTF-8">
+    		<title>AnalTester</title>
+    		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    		<link rel="shortcut icon" href="images/favicon.png">
+    		<link rel="apple-touch-icon" href="images/apple-touch-icon.png">    		<!--
+    			<link rel="shortcut icon" href="images/favicon.png">
+    			<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    		-->
+    		<link rel="stylesheet" href="css/main.css">
+    		<script>window.$ = window.jQuery = WLJQ;</script>
+    	</head>
+    	<body style="display: none;">
+    		<!--application UI goes here-->
+    		<div id="header">
+				<h1>Adapter Requests Module</h1>
+			</div>
+            <br />
+    		Hello MobileFirst :)	
+
+            <button style="height:50px;margin:20px" onclick="invokeAdapterProcedure()">Invoke procedure</button>
+            <br />
+            <button style="height:50px;margin:20px" onclick="logAnalytics()">Log some analytics</button>
+            <br/>
+            <button style="height:50px;margin:20px" onclick="invokeAdapterStubs('/hello/world')">Invoke Stubs procedure</button>
+            <br />
+				Enter Key:<br>
+				<input type="text" id="keyBox" value="MickeyMouse">
+            <button style="height:20px;margin:20px" onclick="postData()">Post Key</button>
+            <br />          
+            
+			<div id="wrapper">
+    			<div id="AppDiv">
+					<input type="button" class="appButton" value="Call protected adapter proc" onclick="getSecretData()" />
+					<input type="button" class="appButton" value="Logout" onclick="WL.Client.logout('LDAPRealm',{onSuccess: WL.Client.reloadApp})" />				
+					<p id="resultDiv"></p>
+        		</div>
+        
+        		<div id="AuthDiv" style="display:none">
+					<div id="loginForm">
+						<input type="text" id="usernameInputField" placeholder="Enter username" /><br />
+						<input type="password" placeholder="Enter password" id="passwordInputField" /><br/>		
+						<input type="button" class="formButton" id="loginButton" value="Login" /><input type="button" class="formButton" id="cancelButton" value="Cancel" />
+					</div>
+        		</div>
+        	</div>
+        	
+        	<script src="js/initOptions.js"></script>
+    		<script src="js/main.js"></script>
+    		<script src="js/messages.js"></script>
+            <script src="hello.js"></script>
+    		<script src="js/LDAPRealmChallengeHandler.js"></script>
+    	</body>
+</html>

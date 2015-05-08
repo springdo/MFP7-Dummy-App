@@ -3,5 +3,6 @@
     <wb-resource deploy-path="/" source-path="/apps/AnalTester/common"/>
     <wb-resource deploy-path="/" source-path="/apps/AnalTester/mobilewebapp"/>
         <wb-resource deploy-path="/" source-path="/apps/AnalTester/android"/>
+        <wb-resource deploy-path="/" source-path="/apps/AdapterApp/android"/>
   </wb-module>
 </project-modules>
