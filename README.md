@@ -10,3 +10,5 @@
 ### Example LDAP with ApplicationCenter 
 
 * server.xml at root of project for AppCenter
+
+NOTE - LDAP Adapter Auth only works when deployed to simulator or device ie won't work in the browser
