@@ -1,0 +1,118 @@
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>jsp-2.2</feature>
+    
+        <!-- Begin of features added by IBM Worklight installer. -->
+        <!-- The following lines will be removed when the application is uninstalled -->
+        <feature>ssl-1.0</feature>
+        <feature>servlet-3.0</feature>
+        <feature>jdbc-4.0</feature>
+        <feature>jndi-1.0</feature>
+        <feature>appSecurity-2.0</feature>
+        <feature>ldapRegistry-3.0</feature>
+        <!-- End of features added by IBM Worklight installer. -->
+
+    </featureManager>
+
+    <httpEndpoint id="defaultHttpEndpoint"
+                  host="*"
+                  httpPort="9080"
+                  httpsPort="9443" >
+
+        <!-- Option soReuseAddr added by IBM Worklight installer. -->
+        <tcpOptions soReuseAddr="true"/>
+
+    </httpEndpoint>
+<!-- 
+    <ldapRegistry baseDN="o=example.com" host="ldap.forumsys.com" id="ALL"
+                  ldapType="custom" port="389" realm="AppCenterLdap"
+                  recursiveSearch="true">
+      <idsFilters 
+          groupFilter="(&amp;(objectClass=*))" id="ALL" 
+          userFilter="(&amp;(objectClass=*))" 
+          userIdMap="*"/>
+    </ldapRegistry> -->
+
+    <ldapRegistry baseDN="dc=example,dc=com" bindDN="uid=tesla,dc=example,dc=com" 
+        bindPassword="password" host="ldap.forumsys.com" id="openldap" ldapType="Custom" port="389">
+        <customFilters userFilter="(&amp;(uid=%v)(objectclass=person))"/>
+    </ldapRegistry>
+
+
+
+    <!-- Begin of configuration added by IBM Worklight installer. -->
+
+    <!-- Declare the IBM Application Center Console application. -->
+    <application id="appcenterconsole" name="appcenterconsole" location="appcenterconsole.war" type="war">
+<!--         <application-bnd>
+            <security-role name="appcenteradmin">
+                <group name="appcentergroup"/>
+            </security-role>
+        </application-bnd> -->
+
+        <application-bnd> 
+         <security-role name="appcenteruser" id="appcenteruser"> 
+           <group name="chemists" /> 
+         </security-role> 
+         <security-role name="appcenteradmin" id="appcenteradmin"> 
+           <group name="mathematicians" /> 
+         </security-role> 
+      </application-bnd>
+
+    </application>
+
+    <!-- Declare the IBM Application Center Services application. -->
+    <application id="applicationcenter" name="applicationcenter" location="applicationcenter.war" type="war">
+<!--         <application-bnd>
+            <security-role name="appcenteradmin">
+                <group name="appcentergroup"/>
+            </security-role>
+        </application-bnd> -->
+        <application-bnd> 
+         <security-role name="appcenteruser" id="appcenteruser"> 
+           <group name="chemists" /> 
+         </security-role> 
+         <security-role name="appcenteradmin" id="appcenteradmin"> 
+           <group name="mathematicians" /> 
+         </security-role> 
+      </application-bnd>
+
+
+        <classloader delegation="parentLast">
+            <commonLibrary>
+                <fileset dir="${wlp.install.dir}/lib" includes="com.ibm.ws.crypto.passwordutil_1.0.1.jar"/>
+            </commonLibrary>
+        </classloader>
+    </application>
+
+    <!-- Declare the JNDI properties for the IBM Application Center. -->
+    
+    <!-- Define the AppCenter services endpoint in order for the AppCenter console to be able to invoke the REST service.
+            You need to enable this property if the server is behind a reverse proxy
+            or if the context root of the Application Center Services application is different from '/applicationcenter'. -->
+    <!-- <jndiEntry jndiName="ibm.appcenter.services.endpoint" value='"http://proxyhost:proxyport/applicationcenter"'/> -->
+    <!-- The directory with binaries of the 'aapt' program, from the Android SDK's platform-tools package. -->
+    <jndiEntry jndiName="android.aapt.dir" value='"/Applications/IBM/MobileFirst_Platform_Server/ApplicationCenter/tools/android-sdk"'/>
+    <!-- The protocol of the application resources URI. This property is optional. It is only needed if the protocol of the external and internal URI are different. -->
+    <!-- <jndiEntry jndiName="ibm.appcenter.proxy.protocol" value='"http"'/> -->
+    <!-- The hostname of the application resources URI. -->
+    <!-- <jndiEntry jndiName="ibm.appcenter.proxy.host" value='"proxyhost"'/> -->
+    <!-- The port of the application resources URI. This property is optional. -->
+    <!-- <jndiEntry jndiName="ibm.appcenter.proxy.port" value="proxyport"/> -->
+
+    <!-- Declare the jar file for Derby with the "embedded" deployment option. -->
+    <library id="DerbyLib">
+        <fileset dir="${shared.resource.dir}/derby" includes="derby.jar"/>
+    </library>
+
+    <!-- Declare the IBM Application Center database. -->
+    <dataSource jndiName="jdbc/AppCenterDS" transactional="false">
+        <jdbcDriver libraryRef="DerbyLib"/>
+        <properties.derby.embedded databaseName="/var/ibm/MobileFirst_Platform_Server/derby/APPCNTR" user="APPCENTER"/>
+    </dataSource>
+
+    <!-- End of configuration added by IBM Worklight installer. -->
+
+</server>
